@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbxiazhulishiMapper">
+	<resultMap type="com.example.demo.domain.TbXiazhujilu" id="TbFromResult">
+		<result property="orderId"    column="order_id"    />
+		<result property="number"    column="number"    />
+		<result property="qihao"    column="qihao"    />
+		<result property="type"    column="type"    />
+		<result property="fromId"    column="from_id"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="status"    column="status"    />
+		<result property="money"    column="money"    />
+		<result property="price"    column="price"    />
+	</resultMap>
+	<select id="selectAllList" resultMap="TbFromResult">
+		select
+			order_id,
+			number,
+			qihao,
+			type,
+			from_id,
+			create_time,
+			update_time,
+			status,
+			money,
+			price
+		from tb_xiazhujilu where status = 2
+
+	</select>
+
+	<select id="selectList" parameterType="java.lang.Long" resultMap="TbFromResult">
+		select
+			order_id,
+			number,
+			qihao,
+			type,
+			from_id,
+			create_time,
+			update_time,
+			status,
+			money,
+			price
+		from tb_xiazhujilu
+		where from_id = #{fromId,jdbcType=BIGINT}
+		order by create_time desc
+		<if test="limit != null">
+			limit #{limit}
+		</if>
+	</select>
+
+
+	<insert id="insertSelective"  parameterType="com.example.demo.domain.TbXiazhujilu">
+		insert into tb_xiazhujilu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="number != null">
+				number,
+			</if>
+			<if test="qihao != null">
+				qihao,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="fromId != null">
+				from_id,
+			</if>
+			<if test="status != null">
+				`status`,
+			</if>
+			<if test="money != null">
+				money,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+				create_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="number != null">
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="qihao != null">
+				#{qihao,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=BIGINT},
+			</if>
+			<if test="fromId != null">
+				#{fromId,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=BIGINT},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=DECIMAL},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			sysdate()
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="java.util.Map">
+		<!--@mbg.generated-->
+		update tb_xiazhujilu
+		set
+			status = #{status,jdbcType=BIGINT},
+			update_time = sysdate()
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</update>
+</mapper>

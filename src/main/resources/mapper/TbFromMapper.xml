@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TbFromMapper">
+	<resultMap type="com.example.demo.domain.TbFrom" id="TbFromResult">
+		<result property="id"    column="id"    />
+		<result property="firstName"    column="first_name"    />
+		<result property="isBot"    column="is_bot"    />
+		<result property="lastName"    column="last_name"    />
+		<result property="userName"    column="user_name"    />
+		<result property="languageCode"    column="language_code"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="balance"    column="balance"    />
+	</resultMap>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="TbFromResult">
+		select
+		id,first_name,is_bot,last_name,user_name,language_code,create_time,balance
+		from tb_from
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<insert id="insertSelective"  parameterType="com.example.demo.domain.TbFrom">
+		insert into tb_from
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="firstName != null">
+				first_name,
+			</if>
+			<if test="isBot != null">
+				is_bot,
+			</if>
+			<if test="lastName != null">
+				`last_name`,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="languageCode != null">
+				`language_code`,
+			</if>
+				create_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="firstName != null">
+				#{firstName,jdbcType=VARCHAR},
+			</if>
+			<if test="isBot != null">
+				#{isBot,jdbcType=BIGINT},
+			</if>
+			<if test="lastName != null">
+				#{lastName,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="languageCode != null">
+				#{languageCode,jdbcType=VARCHAR},
+			</if>
+			sysdate()
+		</trim>
+	</insert>
+	<update id="updatejianqian" parameterType="java.util.Map">
+		<!--@mbg.generated-->
+		update tb_from
+		<set>
+			<if test="balance != null">
+				balance = balance - #{balance,jdbcType=DECIMAL}
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updatejiaqian" parameterType="java.util.Map">
+		<!--@mbg.generated-->
+		update tb_from
+		<set>
+			<if test="balance != null">
+				balance = balance + #{balance,jdbcType=DECIMAL}
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>
